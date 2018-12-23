@@ -1,0 +1,6 @@
+manifest.mf
+*.rlog
+build/classes/
+depreched/
+dist/
+nbproject/
