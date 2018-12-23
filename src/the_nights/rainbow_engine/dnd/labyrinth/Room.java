@@ -191,17 +191,17 @@ public class Room implements Serializable {
         return !exits.isEmpty();
     }
 
-    public char getMonsterMapCode() {
-        if (isConflict()) {
-            return 'C';
-        } else if (this.player != null) {
-            return player.getMapCode();
-        } else if (this.monster != null) {
-            return monster.getMapCode();
-        } else {
-            return ' ';
-        }
-    }
+//    public char getMonsterMapCode() {
+//        if (isConflict()) {
+//            return 'C';
+//        } else if (this.player != null) {
+//            return player.getMapCode();
+//        } else if (this.monster != null) {
+//            return monster.getMapCode();
+//        } else {
+//            return ' ';
+//        }
+//    }
 
     /**
      * gets the exits
@@ -247,18 +247,18 @@ public class Room implements Serializable {
         return lootList.toArray(itemList);
     }
 
-    /**
-     * pick up and item and places it in an inventory
-     *
-     * @param id id of item
-     * @param inventory inventory that the item is added to.
-     */
-    public void pickupItem(int id, Inventory inventory) {
-        Item returnItem = lootList.get(id);
-        if (inventory.addItem(returnItem)) {
-            lootList.remove(id);
-        }
-    }
+//    /**
+//     * pick up and item and places it in an inventory
+//     *
+//     * @param id id of item
+//     * @param inventory inventory that the item is added to.
+//     */
+//    public void pickupItem(int id, Inventory inventory) {
+//        Item returnItem = lootList.get(id);
+//        if (inventory.addItem(returnItem)) {
+//            lootList.remove(id);
+//        }
+//    }
 
     /**
      * adds item to the loot list
@@ -293,12 +293,12 @@ public class Room implements Serializable {
     public void setPlayerVisisted() {
         playerVissited = true;
     }
-
-    public void useItem(int id, Player p) {
-        if (itemList()[id].useItem(p)) {
-            lootList.remove(id);
-        }
-    }
+//
+//    public void useItem(int id, Player p) {
+//        if (itemList()[id].useItem(p)) {
+//            lootList.remove(id);
+//        }
+//    }
 
     public Actor getGhoust() {
         return ghost;
