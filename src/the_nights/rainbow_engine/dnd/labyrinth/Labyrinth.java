@@ -5,10 +5,39 @@
  */
 package the_nights.rainbow_engine.dnd.labyrinth;
 
+import the_nights.rainbow_engine.core.interfaces.IRender;
+import the_nights.rainbow_engine.core.interfaces.IScreenBuffer;
+
 /**
  *
  * @author Stephanie
  */
-class Labyrinth {
-    
+public class Labyrinth{
+    private int size;
+    private Room[][] maze;
+    private boolean isLoop = false;
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public Room[][] getMaze() {
+        return maze;
+    }
+
+    public void setMaze(Room[][] maze) {
+        this.maze = maze;
+    }
+
+    public boolean isIsLoop() {
+        return isLoop;
+    }
+
+    public void setIsLoop(boolean isLoop) {
+        this.isLoop = isLoop;
+    }    
 }

@@ -12,25 +12,27 @@ import java.util.Collections;
  *
  * @author Stephanie
  */
-public class Generator {
-    private int size;
-    private Room[][] maze;
-    private boolean isLoop = false;
-    
-    private void startMazeGeneration() {
-        maze[0][0].setIsExit(true);
-        Compass dir = Compass.S;
-        // Add Exit to Current Room
+public class LabyrinthGenerator {
+    private static Labyrinth lab;
+    public static Labyrinth Generate(int size) {
+        lab = new Labyrinth(); 
+        lab.setSize(size);
+        Room room = (lab.getMaze()[0][0] == null)? new Room("") : lab.getMaze()[0][0];        
+        room.setIsExit(true);
+        Compass dir = Compass.S;        
+        // Add Exit from Current Room        
         int nextX = dir.dx;      // gets X for the next Room 
         int nextY = dir.dy;      // gets Y for the nex Room
-        maze[0][0].setExit(dir.direction, maze[nextX][nextY]);
+        Room nextroom = (lab.getMaze()[nextX][nextY] == null)? new Room("") : lab.getMaze()[nextX][nextY];   
+        room.setExit(dir.direction,nextroom);
         // Add oppesite exit to next Room to bind them together
-        maze[nextX][nextY].setExit(dir.opposite.direction, maze[0][0]);
+        nextroom.setExit(dir.opposite.direction, room);
         // goes to next Cell and start the proces over again untill all rooms is full.
         generateRoom(nextX, nextY);
+        return lab;
     }
 
-    private void generateRoom(int currentX, int currentY) {        
+    private static void generateRoom(int currentX, int currentY) {        
         Compass[] dirs = Compass.values(); // gets all 4 enums for direction
         Collections.shuffle(Arrays.asList(dirs)); // mixes them up to get a reandom direction.
         for (Compass compass : dirs) // loops through each posible direction
@@ -40,29 +42,29 @@ public class Generator {
             if (nextX == 0 && nextY == 0) {
                 continue; //checks if Spawn room if true skip.
             }
-            if (isInsideMaze(nextX, this.size) // checks if x is indside maze.
-                    && isInsideMaze(nextY, this.size)) // checks if y is indside maze.
+            if (isInsideMaze(nextX, lab.getSize()) // checks if x is indside maze.
+                    && isInsideMaze(nextY, lab.getSize())) // checks if y is indside maze.
             {
                 // checks if room has no exits 
-                if (!maze[nextX][nextY].hasAnyExits()) {
+                if (!lab.getMaze()[nextX][nextY].hasAnyExits()) {
                     // Add Exit to Current Room
-                    maze[currentX][currentY].setExit(compass.direction, maze[nextX][nextY]);
+                    lab.getMaze()[currentX][currentY].setExit(compass.direction, lab.getMaze()[nextX][nextY]);
                     // Add oppesite exit to next Room to bind them together
-                    maze[nextX][nextY].setExit(compass.opposite.direction, maze[currentX][currentY]);
+                    lab.getMaze()[nextX][nextY].setExit(compass.opposite.direction, lab.getMaze()[currentX][currentY]);
                     // goes to next Cell and start the proces over again untill all rooms is full.
                     generateRoom(nextX, nextY);
                 } else {
                     // we have reached a room with an exit, checks if we should punch a hole 
                     // before backtracking to make sure the map is a loop
-                    if (!maze[nextX][nextY].hasExit(compass.opposite.direction) // is there allready a exit to this room
-                            && (!isLoop || ((int) (Math.random() * 20) == 5))) // force or random
+                    if (!lab.getMaze()[nextX][nextY].hasExit(compass.opposite.direction) // is there allready a exit to this room
+                            && (!lab.isIsLoop() || ((int) (Math.random() * 20) == 5))) // force or random
                     {
                         // Add Exit to Current Room
-                        maze[currentX][currentY].setExit(compass.direction, maze[nextX][nextY]);
+                        lab.getMaze()[currentX][currentY].setExit(compass.direction, lab.getMaze()[nextX][nextY]);
                         // Add oppesite exit to next Room to bind them together
-                        maze[nextX][nextY].setExit(compass.opposite.direction, maze[currentX][currentY]);
+                        lab.getMaze()[nextX][nextY].setExit(compass.opposite.direction, lab.getMaze()[currentX][currentY]);
                         // the maze is now a loop
-                        isLoop = true;   // no need to force no more                     
+                        lab.setIsLoop(true);   // no need to force no more                     
                     }
                 }
             }
@@ -71,7 +73,7 @@ public class Generator {
     /*
      * Checks if the next room is inside the maze.
      */
-    private boolean isInsideMaze(int v, int upper) {
+    private static boolean isInsideMaze(int v, int upper) {
         return (v >= 0) && (v < upper);
     }
 }
