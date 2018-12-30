@@ -14,7 +14,7 @@ import the_nights.rainbow_engine.core.interfaces.IScreenBuffer;
  */
 public class Labyrinth{
     private int size;
-    private Room[][] maze;
+    private Room[][] maze = new Room[0][0];
     private boolean isLoop = false;
 
     public int getSize() {
@@ -23,6 +23,7 @@ public class Labyrinth{
 
     public void setSize(int size) {
         this.size = size;
+        maze = new Room[size][size];
     }
 
     public Room[][] getMaze() {
@@ -33,11 +34,11 @@ public class Labyrinth{
         this.maze = maze;
     }
 
-    public boolean isIsLoop() {
+    public boolean isLoop() {
         return isLoop;
     }
 
-    public void setIsLoop(boolean isLoop) {
+    public void setLoop(boolean isLoop) {
         this.isLoop = isLoop;
     }    
 }
