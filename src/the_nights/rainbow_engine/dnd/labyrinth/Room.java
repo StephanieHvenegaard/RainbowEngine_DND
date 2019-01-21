@@ -1,6 +1,25 @@
 /*
- * Here comes the text of your license
- * Each line should be prefixed with  * 
+ * MIT License
+ * 
+ * Copyright (c) 2019 Stephanie Hvenegaard
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
 package the_nights.rainbow_engine.dnd.labyrinth;
 
@@ -20,12 +39,14 @@ public class Room implements Serializable {
     private String description;
     private HashMap<String, Room> exits;
     private HashMap<String, Door> doors;
-    private Actor player; // Copy
-    private Actor monster; // Copy
-    private Actor ghost; // Copy
+    //private Actor player; // Copy
+    //private Actor monster; // Copy
+    //private Actor ghost; // Copy
     private ArrayList<Item> lootList;
-    private int pictureID_3D;
-    private int pictureID_MiniMap;
+    private ArrayList<Actor> MonstersList;
+    private ArrayList<Actor> PlayersList;
+    //private int pictureID_3D;
+    //private int pictureID_MiniMap;
     private boolean playerVissited;
     private boolean isExit; // one room is the exit of the maze
 
@@ -38,12 +59,15 @@ public class Room implements Serializable {
      */
     public Room(String description) {
         this.description = description;
+        this.playerVissited = false;
         exits = new HashMap<>();
         doors = new HashMap<>();
         lootList = new ArrayList<>();
-        this.pictureID_3D = 0;
-        this.pictureID_MiniMap = 0;
-        this.playerVissited = false;
+        MonstersList = new ArrayList<>();
+        PlayersList = new ArrayList<>();
+//        this.pictureID_3D = 0;
+//        this.pictureID_MiniMap = 0;
+    
     }
 
     /**
@@ -91,25 +115,25 @@ public class Room implements Serializable {
         return isExit;
     }
 
-    /**
-     *
-     * @param pictureID_3D
-     */
-    public void setPictureID_3D(int pictureID_3D) {
-        this.pictureID_3D = pictureID_3D;
-    }
-
-    public void setPictureID_MiniMap(int pictureID_MiniMap) {
-        this.pictureID_MiniMap = pictureID_MiniMap;
-    }
-
-    public int getPictureID_3D() {
-        return pictureID_3D;
-    }
-
-    public int getPictureID_MiniMap() {
-        return pictureID_MiniMap;
-    }
+//    /**
+//     *
+//     * @param pictureID_3D
+//     */
+//    public void setPictureID_3D(int pictureID_3D) {
+//        this.pictureID_3D = pictureID_3D;
+//    }
+//
+//    public void setPictureID_MiniMap(int pictureID_MiniMap) {
+//        this.pictureID_MiniMap = pictureID_MiniMap;
+//    }
+//
+//    public int getPictureID_3D() {
+//        return pictureID_3D;
+//    }
+//
+//    public int getPictureID_MiniMap() {
+//        return pictureID_MiniMap;
+//    }
 
     public boolean isPlayerVissited() {
         return playerVissited;
@@ -161,27 +185,27 @@ public class Room implements Serializable {
         return exits.get(direction);
     }
 
-    public void setPlayer(Actor actor) {
-        player = actor;
-        playerVissited = true;
-    }
-
-    public void setMonster(Actor actor) {
-        monster = actor;
-    }
-
-    public Actor getPlayer() {
-        return player;
-    }
-
-    public Actor getMonster() {
-
-        return monster;
-    }
-
-    public boolean isConflict() {
-        return (player != null && monster != null);
-    }
+//    public void setPlayer(Actor actor) {
+//        player = actor;
+//        playerVissited = true;
+//    }
+//
+//    public void setMonster(Actor actor) {
+//        monster = actor;
+//    }
+//
+//    public Actor getPlayer() {
+//        return player;
+//    }
+//
+//    public Actor getMonster() {
+//
+//        return monster;
+//    }
+//
+//    public boolean isConflict() {
+//        return (player != null && monster != null);
+//    }
 
     public boolean hasExit(String direction) {
         return exits.containsKey(direction);
@@ -300,16 +324,14 @@ public class Room implements Serializable {
 //        }
 //    }
 
-    public Actor getGhoust() {
-        return ghost;
-    }
-
-    public void setGhoust(Actor gaust) {
-        this.ghost = gaust;
-    }
-
-    public boolean isOccupied() {
-        boolean o = (ghost != null || monster != null);
-        return o;
-    }
+//    public Actor getGhoust() {
+//        return ghost;
+//    }
+//    public void setGhoust(Actor gaust) {
+//        this.ghost = gaust;
+//    }
+//    public boolean isOccupied() {
+//        boolean o = (ghost != null || monster != null);
+//        return o;
+//    }
 }
